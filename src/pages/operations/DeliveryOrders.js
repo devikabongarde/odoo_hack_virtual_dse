@@ -83,7 +83,7 @@ const DeliveryOrders = () => {
               <tbody className="divide-y divide-gray-200">
                 {filteredOrders.map((order, index) => (
                   <tr key={index} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap font-medium text-blue-600">{order.reference}</td>
+                    <td className="px-6 py-4 whitespace-nowrap font-medium text-blue-600 hover:text-blue-800 cursor-pointer" onClick={() => window.location.href = '/dashboard/delivery-orders/detail'}>{order.reference}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-gray-900">{order.from}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-gray-900">{order.to}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-gray-900">{order.contact}</td>
