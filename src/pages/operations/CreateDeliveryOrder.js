@@ -17,13 +17,36 @@ const CreateDeliveryOrder = () => {
     setFormData({ ...formData, [field]: value });
   };
 
-  const validateOrder = () => {
+  const createOrder = async () => {
     if (!formData.from || !formData.to || !formData.contact) {
       alert('Please fill all required fields');
       return;
     }
-    alert('Delivery Order created successfully!');
-    window.location.href = '/dashboard/delivery-orders';
+
+    try {
+      const response = await fetch('http://localhost:5000/api/deliveries', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          reference: formData.reference,
+          from_location: formData.from,
+          to_location: formData.to,
+          contact: formData.contact,
+          schedule_date: formData.scheduleDate,
+          status: 'Ready'
+        })
+      });
+
+      if (response.ok) {
+        alert('Delivery Order created successfully!');
+        window.location.href = '/dashboard/delivery-orders';
+      } else {
+        alert('Failed to create delivery order');
+      }
+    } catch (error) {
+      console.error('Error creating delivery order:', error);
+      alert('Error creating delivery order');
+    }
   };
 
   return (
@@ -119,7 +142,7 @@ const CreateDeliveryOrder = () => {
             Cancel
           </button>
           <button
-            onClick={validateOrder}
+            onClick={createOrder}
             className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
           >
             Create Delivery Order
