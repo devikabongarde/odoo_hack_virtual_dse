@@ -10,7 +10,11 @@ const Warehouses = () => {
     { id: 3, name: 'Distribution Center', code: 'DC001', address: '789 Logistics Park, West Side, NY 10003' },
     { id: 4, name: 'Cold Storage Facility', code: 'CS001', address: '321 Refrigeration Way, North Zone, NY 10004' },
     { id: 5, name: 'Returns Processing Center', code: 'RPC001', address: '654 Return Lane, South Area, NY 10005' },
-    { id: 6, name: 'Overflow Storage', code: 'OS001', address: '987 Backup Street, Suburban, NY 10006' }
+    { id: 6, name: 'Overflow Storage', code: 'OS001', address: '987 Backup Street, Suburban, NY 10006' },
+    { id: 7, name: 'Regional Warehouse', code: 'WH003', address: '111 Regional Rd, Regional City, NY 10007' },
+    { id: 8, name: 'International Hub', code: 'IH001', address: '222 International Blvd, Global Town, NY 10008' },
+    { id: 9, name: 'Express Delivery Center', code: 'EDC001', address: '333 Express Way, Fast City, NY 10009' },
+    { id: 10, name: 'Bulk Storage', code: 'BS001', address: '444 Bulk Ave, Storage Valley, NY 10010' }
   ]);
   const [newWarehouse, setNewWarehouse] = useState({ name: '', code: '', address: '' });
 

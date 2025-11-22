@@ -8,12 +8,21 @@ const CreateInternalTransfer = () => {
 
   const locations = ['Main Warehouse', 'Secondary Warehouse', 'Distribution Center', 'Storage Room A', 'Storage Room B'];
   const availableProducts = [
-    { name: 'Wireless Headphones', stock: { 'Main Warehouse': 45, 'Secondary Warehouse': 12, 'Distribution Center': 8 } },
-    { name: 'Cotton T-Shirt', stock: { 'Main Warehouse': 120, 'Secondary Warehouse': 0, 'Distribution Center': 80 } },
-    { name: 'Coffee Beans', stock: { 'Main Warehouse': 25, 'Secondary Warehouse': 15, 'Distribution Center': 0 } },
-    { name: 'Garden Hose', stock: { 'Main Warehouse': 8, 'Secondary Warehouse': 20, 'Distribution Center': 5 } },
-    { name: 'Smartphone Case', stock: { 'Main Warehouse': 200, 'Secondary Warehouse': 150, 'Distribution Center': 75 } },
-    { name: 'LED Bulb', stock: { 'Main Warehouse': 300, 'Secondary Warehouse': 100, 'Distribution Center': 50 } }
+    { name: 'Wireless Headphones', stock: { 'Main Warehouse': 75, 'Secondary Warehouse': 45, 'Distribution Center': 30 } },
+    { name: 'Office Chair', stock: { 'Main Warehouse': 25, 'Secondary Warehouse': 30, 'Distribution Center': 20 } },
+    { name: 'Cotton T-Shirt', stock: { 'Main Warehouse': 100, 'Secondary Warehouse': 50, 'Distribution Center': 50 } },
+    { name: 'Coffee Beans', stock: { 'Main Warehouse': 60, 'Secondary Warehouse': 35, 'Distribution Center': 25 } },
+    { name: 'Garden Hose', stock: { 'Main Warehouse': 20, 'Secondary Warehouse': 15, 'Distribution Center': 10 } },
+    { name: 'Smartphone Case', stock: { 'Main Warehouse': 150, 'Secondary Warehouse': 100, 'Distribution Center': 50 } },
+    { name: 'LED Bulb', stock: { 'Main Warehouse': 250, 'Secondary Warehouse': 150, 'Distribution Center': 100 } },
+    { name: 'Laptop Stand', stock: { 'Main Warehouse': 30, 'Secondary Warehouse': 20, 'Distribution Center': 10 } },
+    { name: 'Desk Lamp', stock: { 'Main Warehouse': 40, 'Secondary Warehouse': 25, 'Distribution Center': 20 } },
+    { name: 'Mouse Pad', stock: { 'Main Warehouse': 90, 'Secondary Warehouse': 60, 'Distribution Center': 30 } },
+    { name: 'USB Cable', stock: { 'Main Warehouse': 200, 'Secondary Warehouse': 120, 'Distribution Center': 80 } },
+    { name: 'Water Bottle', stock: { 'Main Warehouse': 45, 'Secondary Warehouse': 30, 'Distribution Center': 15 } },
+    { name: 'Bluetooth Speaker', stock: { 'Main Warehouse': 35, 'Secondary Warehouse': 20, 'Distribution Center': 10 } },
+    { name: 'Notebook', stock: { 'Main Warehouse': 125, 'Secondary Warehouse': 75, 'Distribution Center': 50 } },
+    { name: 'Pen Set', stock: { 'Main Warehouse': 75, 'Secondary Warehouse': 50, 'Distribution Center': 25 } }
   ];
 
   const addProduct = () => {

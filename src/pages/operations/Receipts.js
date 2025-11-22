@@ -1,18 +1,54 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const Receipts = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [viewMode, setViewMode] = useState('list');
 
-  const mockReceipts = [
-    { reference: 'WH/IN/0001', from: 'vendor', to: 'WH/Stock1', contact: 'Azure Interior', scheduleDate: '—', status: 'Ready' },
-    { reference: 'WH/IN/0002', from: 'vendor', to: 'WH/Stock1', contact: 'Azure Interior', scheduleDate: '—', status: 'Ready' },
-  ];
+  const [receipts, setReceipts] = useState([
+    { reference: 'WH/IN/0001', from_location: 'vendor', to_location: 'Main Warehouse', contact: 'Tech Solutions Inc', schedule_date: '2024-01-15', status: 'Done' },
+    { reference: 'WH/IN/0002', from_location: 'vendor', to_location: 'Main Warehouse', contact: 'Global Electronics', schedule_date: '2024-01-16', status: 'Ready' },
+    { reference: 'WH/IN/0003', from_location: 'vendor', to_location: 'Secondary Warehouse', contact: 'Office Supplies Co', schedule_date: '2024-01-18', status: 'In Transit' },
+    { reference: 'WH/IN/0004', from_location: 'vendor', to_location: 'Main Warehouse', contact: 'Fashion Wholesale', schedule_date: '2024-01-20', status: 'Ready' },
+    { reference: 'WH/IN/0005', from_location: 'vendor', to_location: 'Distribution Center', contact: 'Home & Garden Ltd', schedule_date: '2024-01-22', status: 'Done' },
+    { reference: 'WH/IN/0006', from_location: 'vendor', to_location: 'Main Warehouse', contact: 'Beverage Distributors', schedule_date: '2024-01-25', status: 'Ready' },
+    { reference: 'WH/IN/0007', from_location: 'vendor', to_location: 'Secondary Warehouse', contact: 'Sports Equipment Inc', schedule_date: '2024-01-28', status: 'In Transit' },
+    { reference: 'WH/IN/0008', from_location: 'vendor', to_location: 'Main Warehouse', contact: 'Stationery World', schedule_date: '2024-01-30', status: 'Done' },
+    { reference: 'WH/IN/0009', from_location: 'vendor', to_location: 'Distribution Center', contact: 'Furniture Plus', schedule_date: '2024-02-02', status: 'Ready' },
+    { reference: 'WH/IN/0010', from_location: 'vendor', to_location: 'Main Warehouse', contact: 'Lighting Solutions', schedule_date: '2024-02-05', status: 'In Transit' },
+    { reference: 'WH/IN/0011', from_location: 'vendor', to_location: 'Secondary Warehouse', contact: 'Cable Manufacturers', schedule_date: '2024-02-08', status: 'Ready' },
+    { reference: 'WH/IN/0012', from_location: 'vendor', to_location: 'Main Warehouse', contact: 'Audio Tech Corp', schedule_date: '2024-02-10', status: 'Done' }
+  ]);
+  const [loading, setLoading] = useState(true);
 
-  const filteredReceipts = mockReceipts.filter(receipt => 
+  useEffect(() => {
+    fetchReceipts();
+  }, []);
+
+  const fetchReceipts = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/api/receipts');
+      const data = await response.json();
+      setReceipts(data);
+    } catch (error) {
+      console.error('Error fetching receipts:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const filteredReceipts = receipts.filter(receipt =>
     receipt.reference.toLowerCase().includes(searchTerm.toLowerCase()) ||
     receipt.contact.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const getStatusColor = (status) => {
+    switch (status) {
+      case 'Done': return 'bg-green-100 text-green-800';
+      case 'In Transit': return 'bg-blue-100 text-blue-800';
+      case 'Ready': return 'bg-yellow-100 text-yellow-800';
+      default: return 'bg-gray-100 text-gray-800';
+    }
+  };
 
   return (
     <div>
@@ -69,7 +105,16 @@ const Receipts = () => {
           </div>
 
           {/* Content */}
-          {viewMode === 'list' ? (
+          {loading ? (
+            <div className="text-center py-12">
+              <div className="text-gray-400 mb-4">
+                <svg className="w-16 h-16 mx-auto animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+              </div>
+              <p className="text-gray-500">Loading receipts...</p>
+            </div>
+          ) : viewMode === 'list' ? (
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead className="bg-gray-50">
@@ -86,12 +131,12 @@ const Receipts = () => {
                   {filteredReceipts.map((receipt, index) => (
                     <tr key={index} className="hover:bg-gray-50">
                       <td className="px-6 py-4 whitespace-nowrap font-medium text-blue-600">{receipt.reference}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-gray-900">{receipt.from}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-gray-900">{receipt.to}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-gray-900">{receipt.from_location}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-gray-900">{receipt.to_location}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-gray-900">{receipt.contact}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-gray-600">{receipt.scheduleDate}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-gray-600">{receipt.schedule_date}</td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                        <span className={`px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(receipt.status)}`}>
                           {receipt.status}
                         </span>
                       </td>
@@ -106,13 +151,13 @@ const Receipts = () => {
                 <div key={index} className="bg-gray-50 rounded-lg p-4 border">
                   <div className="font-medium text-blue-600 mb-2">{receipt.reference}</div>
                   <div className="text-sm text-gray-600 space-y-1">
-                    <div>From: {receipt.from}</div>
-                    <div>To: {receipt.to}</div>
+                    <div>From: {receipt.from_location}</div>
+                    <div>To: {receipt.to_location}</div>
                     <div>Contact: {receipt.contact}</div>
-                    <div>Schedule: {receipt.scheduleDate}</div>
+                    <div>Schedule: {receipt.schedule_date}</div>
                   </div>
                   <div className="mt-3">
-                    <span className="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                    <span className={`px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(receipt.status)}`}>
                       {receipt.status}
                     </span>
                   </div>

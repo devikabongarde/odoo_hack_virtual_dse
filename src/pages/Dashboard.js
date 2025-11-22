@@ -3,11 +3,11 @@ import Card from '../components/Card';
 
 const Dashboard = () => {
   const kpiData = {
-    totalProducts: { value: 2847, trend: { positive: true, value: '+12%' } },
-    lowStock: { value: 23, outOfStock: 8 },
-    pendingReceipts: { value: 15, trend: { positive: false, value: '-3%' } },
-    pendingDeliveries: { value: 32, trend: { positive: true, value: '+8%' } },
-    internalTransfers: { value: 7, trend: { positive: true, value: '+2%' } }
+    totalProducts: { value: 20, trend: { positive: true, value: '+15%' } },
+    lowStock: { value: 3, outOfStock: 1 },
+    pendingReceipts: { value: 12, trend: { positive: true, value: '+50%' } },
+    pendingDeliveries: { value: 5, trend: { positive: true, value: '+12%' } },
+    internalTransfers: { value: 25, trend: { positive: true, value: '+525%' } }
   };
 
   const receiptsData = {

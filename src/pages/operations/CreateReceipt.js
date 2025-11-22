@@ -17,13 +17,36 @@ const CreateReceipt = () => {
     setFormData({ ...formData, [field]: value });
   };
 
-  const validateReceipt = () => {
+  const createReceipt = async () => {
     if (!formData.from || !formData.to || !formData.contact) {
       alert('Please fill all required fields');
       return;
     }
-    alert('Receipt created successfully!');
-    window.location.href = '/dashboard/receipts';
+
+    try {
+      const response = await fetch('http://localhost:5000/api/receipts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          reference: formData.reference,
+          from_location: formData.from,
+          to_location: formData.to,
+          contact: formData.contact,
+          schedule_date: formData.scheduleDate,
+          status: 'Ready'
+        })
+      });
+
+      if (response.ok) {
+        alert('Receipt created successfully!');
+        window.location.href = '/dashboard/receipts';
+      } else {
+        alert('Failed to create receipt');
+      }
+    } catch (error) {
+      console.error('Error creating receipt:', error);
+      alert('Error creating receipt');
+    }
   };
 
   return (
@@ -119,7 +142,7 @@ const CreateReceipt = () => {
             Cancel
           </button>
           <button
-            onClick={validateReceipt}
+            onClick={createReceipt}
             className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
           >
             Create Receipt
