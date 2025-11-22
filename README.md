@@ -28,6 +28,7 @@ A modern, responsive inventory management system built with React and Tailwind C
 ## 🛠️ Technology Stack
 
 - **Frontend**: React 18 with Hooks
+- **Backend**: MySQL Database
 - **Styling**: Tailwind CSS
 - **Routing**: React Router DOM
 - **Icons**: Heroicons (SVG)
@@ -46,12 +47,17 @@ A modern, responsive inventory management system built with React and Tailwind C
    npm install
    ```
 
-3. **Start development server**
+3. **Setup MySQL Database**
+   - Install MySQL server
+   - Create database for StockMaster
+   - Configure database connection
+
+4. **Start development server**
    ```bash
    npm start
    ```
 
-4. **Open in browser**
+5. **Open in browser**
    ```
    http://localhost:3000
    ```
@@ -137,20 +143,21 @@ src/
 
 ## 📊 Data Management
 
+- **Database**: MySQL for persistent data storage
 - **Local State**: React useState for component data
-- **Mock Data**: Sample inventory and operations data
 - **Real-time Updates**: Immediate UI updates
 - **Form Validation**: Input validation and error handling
+- **Data Persistence**: All operations stored in MySQL database
 
 ## 🚀 Future Enhancements
 
-- Backend API integration
-- User authentication system
 - Advanced reporting and analytics
 - Barcode scanning support
 - Multi-warehouse management
 - Email notifications
 - Export functionality
+- API endpoints expansion
+- Database optimization
 
 ## 📄 License
 
