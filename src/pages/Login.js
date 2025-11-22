@@ -34,7 +34,7 @@ const Login = () => {
     setTimeout(() => {
       if (formData.email === 'admin@stockmaster.com' && formData.password === 'password') {
         // Redirect to dashboard (in real app, handle authentication)
-        window.location.href = '/';
+        window.location.href = '/dashboard';
       } else {
         setError('Invalid email or password');
       }
