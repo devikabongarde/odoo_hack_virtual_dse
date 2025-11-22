@@ -1,15 +1,7 @@
 import { useState } from 'react';
 import Card from '../components/Card';
-import FilterDropdown from '../components/FilterDropdown';
 
 const Dashboard = () => {
-  const [filters, setFilters] = useState({
-    documentType: '',
-    status: '',
-    warehouse: '',
-    category: ''
-  });
-
   const kpiData = {
     totalProducts: { value: 2847, trend: { positive: true, value: '+12%' } },
     lowStock: { value: 23, outOfStock: 8 },
@@ -18,11 +10,17 @@ const Dashboard = () => {
     internalTransfers: { value: 7, trend: { positive: true, value: '+2%' } }
   };
 
-  const filterOptions = {
-    documentType: ['Receipts', 'Delivery', 'Internal', 'Adjustments'],
-    status: ['Draft', 'Waiting', 'Ready', 'Done', 'Canceled'],
-    warehouse: ['Main Warehouse', 'Secondary Warehouse', 'Distribution Center'],
-    category: ['Electronics', 'Clothing', 'Food & Beverage', 'Home & Garden']
+  const receiptsData = {
+    late: 3,
+    total: 15,
+    pending: 4
+  };
+
+  const deliveryData = {
+    late: 2,
+    waiting: 8,
+    total: 32,
+    pending: 6
   };
 
   const recentActivity = [
@@ -81,46 +79,70 @@ const Dashboard = () => {
         />
       </div>
 
-      {/* Filters */}
-      <div className="bg-white rounded-lg shadow p-6 mb-8">
-        <h3 className="text-lg font-semibold text-gray-800 mb-4">Filters</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <FilterDropdown
-            label="Document Type"
-            options={filterOptions.documentType}
-            value={filters.documentType}
-            onChange={(value) => setFilters({...filters, documentType: value})}
-          />
-          <FilterDropdown
-            label="Status"
-            options={filterOptions.status}
-            value={filters.status}
-            onChange={(value) => setFilters({...filters, status: value})}
-          />
-          <FilterDropdown
-            label="Warehouse / Location"
-            options={filterOptions.warehouse}
-            value={filters.warehouse}
-            onChange={(value) => setFilters({...filters, warehouse: value})}
-          />
-          <FilterDropdown
-            label="Product Category"
-            options={filterOptions.category}
-            value={filters.category}
-            onChange={(value) => setFilters({...filters, category: value})}
-          />
-        </div>
-        {(filters.documentType || filters.status || filters.warehouse || filters.category) && (
-          <div className="mt-4">
-            <button
-              onClick={() => setFilters({ documentType: '', status: '', warehouse: '', category: '' })}
-              className="text-blue-600 hover:text-blue-800 text-sm font-medium"
-            >
-              Clear All Filters
-            </button>
+      {/* Summary Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        {/* Receipts Card */}
+        <div className="bg-white rounded-lg shadow p-6">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-semibold text-gray-800">Receipts</h3>
+            <svg className="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10" />
+            </svg>
           </div>
-        )}
+          <div className="grid grid-cols-3 gap-4 mb-4">
+            <div className="text-center">
+              <div className="text-2xl font-bold text-red-600">{receiptsData.late}</div>
+              <div className="text-sm text-gray-600">Late</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-blue-600">{receiptsData.total}</div>
+              <div className="text-sm text-gray-600">Total Operations</div>
+            </div>
+            <div className="text-center">
+              <button 
+                onClick={() => window.location.href = '/dashboard/receipts'}
+                className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium hover:bg-green-200"
+              >
+                {receiptsData.pending} to receive
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Delivery Card */}
+        <div className="bg-white rounded-lg shadow p-6">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-semibold text-gray-800">Delivery</h3>
+            <svg className="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 17l4 4 4-4m-4-5v9" />
+            </svg>
+          </div>
+          <div className="grid grid-cols-4 gap-3 mb-4">
+            <div className="text-center">
+              <div className="text-2xl font-bold text-red-600">{deliveryData.late}</div>
+              <div className="text-sm text-gray-600">Late</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-yellow-600">{deliveryData.waiting}</div>
+              <div className="text-sm text-gray-600">Waiting</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-blue-600">{deliveryData.total}</div>
+              <div className="text-sm text-gray-600">Total Operations</div>
+            </div>
+            <div className="text-center">
+              <button 
+                onClick={() => window.location.href = '/dashboard/delivery-orders'}
+                className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium hover:bg-green-200"
+              >
+                {deliveryData.pending} to deliver
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
+
+
 
       {/* Recent Activity */}
       <div className="bg-white rounded-lg shadow p-6">

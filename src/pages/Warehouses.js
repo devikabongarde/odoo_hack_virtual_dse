@@ -4,27 +4,95 @@ import Pagination from '../components/Pagination';
 const Warehouses = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
-
-  const mockWarehouses = [
+  const [warehouses, setWarehouses] = useState([
     { id: 1, name: 'Main Warehouse', code: 'WH001', address: '123 Industrial Ave, City Center, NY 10001' },
     { id: 2, name: 'Secondary Warehouse', code: 'WH002', address: '456 Storage Blvd, East District, NY 10002' },
     { id: 3, name: 'Distribution Center', code: 'DC001', address: '789 Logistics Park, West Side, NY 10003' },
     { id: 4, name: 'Cold Storage Facility', code: 'CS001', address: '321 Refrigeration Way, North Zone, NY 10004' },
     { id: 5, name: 'Returns Processing Center', code: 'RPC001', address: '654 Return Lane, South Area, NY 10005' },
     { id: 6, name: 'Overflow Storage', code: 'OS001', address: '987 Backup Street, Suburban, NY 10006' }
-  ];
+  ]);
+  const [newWarehouse, setNewWarehouse] = useState({ name: '', code: '', address: '' });
 
-  const totalPages = Math.ceil(mockWarehouses.length / itemsPerPage);
+  const addWarehouse = () => {
+    if (!newWarehouse.name || !newWarehouse.code || !newWarehouse.address) {
+      alert('Please fill all fields');
+      return;
+    }
+    const warehouse = {
+      id: warehouses.length + 1,
+      ...newWarehouse
+    };
+    setWarehouses([...warehouses, warehouse]);
+    setNewWarehouse({ name: '', code: '', address: '' });
+    document.getElementById('warehouseForm').classList.add('hidden');
+  };
+
+  const totalPages = Math.ceil(warehouses.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const paginatedWarehouses = mockWarehouses.slice(startIndex, startIndex + itemsPerPage);
+  const paginatedWarehouses = warehouses.slice(startIndex, startIndex + itemsPerPage);
 
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold text-gray-800">Warehouses</h2>
-        <a href="/warehouses/add" className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 inline-block">
+        <button 
+          onClick={() => document.getElementById('warehouseForm').classList.toggle('hidden')}
+          className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+        >
           Add Warehouse
-        </a>
+        </button>
+      </div>
+
+      {/* Add Warehouse Form */}
+      <div id="warehouseForm" className="hidden bg-white rounded-lg shadow p-6 mb-6">
+        <h3 className="text-lg font-semibold mb-4">Add New Warehouse</h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Name</label>
+            <input
+              type="text"
+              value={newWarehouse.name}
+              onChange={(e) => setNewWarehouse({...newWarehouse, name: e.target.value})}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Warehouse name"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Code</label>
+            <input
+              type="text"
+              value={newWarehouse.code}
+              onChange={(e) => setNewWarehouse({...newWarehouse, code: e.target.value})}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="WH001"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Address</label>
+            <input
+              type="text"
+              value={newWarehouse.address}
+              onChange={(e) => setNewWarehouse({...newWarehouse, address: e.target.value})}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Full address"
+            />
+          </div>
+        </div>
+        <div className="mt-4 flex gap-2">
+          <button
+            onClick={addWarehouse}
+            className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600"
+          >
+            Add Warehouse
+          </button>
+          <button
+            onClick={() => document.getElementById('warehouseForm').classList.add('hidden')}
+            className="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600"
+          >
+            Cancel
+          </button>
+        </div>
       </div>
 
       <div className="bg-white rounded-lg shadow">
@@ -76,9 +144,12 @@ const Warehouses = () => {
             </div>
             <h3 className="text-lg font-medium text-gray-900 mb-2">No warehouses yet</h3>
             <p className="text-gray-500 mb-6">Get started by adding your first warehouse.</p>
-            <a href="/warehouses/add" className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 inline-block">
+            <button 
+              onClick={() => document.getElementById('warehouseForm').classList.remove('hidden')}
+              className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+            >
               Add Warehouse
-            </a>
+            </button>
           </div>
         )}
       </div>

@@ -4,6 +4,7 @@ import Dashboard from '../pages/Dashboard';
 import Products from '../pages/Products';
 import Warehouses from '../pages/Warehouses';
 import Settings from '../pages/Settings';
+import Locations from '../pages/Locations';
 import Profile from '../pages/Profile';
 import Receipts from '../pages/operations/Receipts';
 import CreateReceipt from '../pages/operations/CreateReceipt';
@@ -18,6 +19,7 @@ import DeliveryOrders from '../pages/operations/DeliveryOrders';
 import InternalTransfers from '../pages/operations/InternalTransfers';
 import Adjustments from '../pages/operations/Adjustments';
 import MoveHistory from '../pages/operations/MoveHistory';
+import DeliveryOrderDetail from '../pages/operations/DeliveryOrderDetail';
 
 const AppRoutes = () => {
   return (
@@ -34,11 +36,13 @@ const AppRoutes = () => {
       <Route path="/dashboard/internal-transfers/create" element={<DashboardLayout><CreateInternalTransfer /></DashboardLayout>} />
       <Route path="/dashboard/warehouses/add" element={<DashboardLayout><AddWarehouse /></DashboardLayout>} />
       <Route path="/dashboard/delivery-orders" element={<DashboardLayout><DeliveryOrders /></DashboardLayout>} />
+      <Route path="/dashboard/delivery-orders/detail" element={<DashboardLayout><DeliveryOrderDetail /></DashboardLayout>} />
       <Route path="/dashboard/internal-transfers" element={<DashboardLayout><InternalTransfers /></DashboardLayout>} />
       <Route path="/dashboard/adjustments" element={<DashboardLayout><Adjustments /></DashboardLayout>} />
       <Route path="/dashboard/move-history" element={<DashboardLayout><MoveHistory /></DashboardLayout>} />
-      <Route path="/dashboard/warehouses" element={<DashboardLayout><Warehouses /></DashboardLayout>} />
       <Route path="/dashboard/settings" element={<DashboardLayout><Settings /></DashboardLayout>} />
+      <Route path="/dashboard/settings/warehouses" element={<DashboardLayout><Warehouses /></DashboardLayout>} />
+      <Route path="/dashboard/settings/locations" element={<DashboardLayout><Locations /></DashboardLayout>} />
       <Route path="/dashboard/profile" element={<DashboardLayout><Profile /></DashboardLayout>} />
     </Routes>
   );
